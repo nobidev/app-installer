@@ -5,17 +5,17 @@
 
 declare(strict_types=1);
 
-namespace NobiDev\LibraryStarter\Tests;
+namespace NobiDev\AppInstaller\Tests;
 
-use NobiDev\LibraryStarter\Constant;
-use NobiDev\LibraryStarter\Facade;
+use NobiDev\AppInstaller\Constant;
+use NobiDev\AppInstaller\Facade;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * @package NobiDev\LibraryStarter\Tests
+ * @package NobiDev\AppInstaller\Tests
  */
 class FacadeTest extends TestCase
 {

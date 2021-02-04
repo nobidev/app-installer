@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "60235ec45da8615b86e0dec9d85351b6",
+  "content-hash": "ad7b4fa67c4a1375500894e66eb6066b",
   "packages": [
     {
       "name": "brick/math",
@@ -1040,6 +1040,67 @@
         }
       ],
       "time": "2021-01-26T20:46:41+00:00"
+    },
+    {
+      "name": "nobidev/app-envmanager",
+      "version": "v1.0.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/NobiDev/app-envmanager.git",
+        "reference": "9b6554a03e1aa82692edfe7a7b9ab9e68737de2e"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/NobiDev/app-envmanager/zipball/9b6554a03e1aa82692edfe7a7b9ab9e68737de2e",
+        "reference": "9b6554a03e1aa82692edfe7a7b9ab9e68737de2e",
+        "shasum": ""
+      },
+      "require": {
+        "laravel/framework": "^8.0",
+        "php": "^7.4|^8.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^9.3"
+      },
+      "type": "library",
+      "extra": {
+        "laravel": {
+          "providers": [
+            "NobiDev\\EnvManager\\ServiceProvider"
+          ],
+          "aliases": {
+            "EnvManager": "NobiDev\\EnvManager\\Facade"
+          }
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "NobiDev\\EnvManager\\": "src/",
+          "NobiDev\\EnvManager\\Tests\\": "tests/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "NobiDev",
+          "email": "opensource@nobidev.com"
+        }
+      ],
+      "description": "Application Environment Manager",
+      "support": {
+        "issues": "https://github.com/NobiDev/app-envmanager/issues",
+        "source": "https://github.com/NobiDev/app-envmanager/tree/v1.0.3"
+      },
+      "funding": [
+        {
+          "url": "https://www.patreon.com/nobidev",
+          "type": "patreon"
+        }
+      ],
+      "time": "2021-02-04T17:12:10+00:00"
     },
     {
       "name": "opis/closure",
@@ -6017,7 +6078,8 @@
   "prefer-stable": false,
   "prefer-lowest": false,
   "platform": {
-    "php": "^7.4|^8.0"
+    "php": "^7.4|^8.0",
+    "ext-json": "*"
   },
   "platform-dev": [],
   "plugin-api-version": "2.0.0"

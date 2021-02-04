@@ -5,12 +5,12 @@
 
 declare(strict_types=1);
 
-namespace NobiDev\LibraryStarter;
+namespace NobiDev\AppInstaller;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 
 /**
- * @package NobiDev\LibraryStarter
+ * @package NobiDev\AppInstaller
  */
 class Facade extends BaseFacade
 {
