@@ -20,9 +20,12 @@
                 <div class="px-4 py-8 border-b border-gray-200 sm:px-6">
                     <div class="flex justify-center items-center">
                         <!--suppress HtmlUnknownTarget -->
-                        <img alt="App logo" class="h-12" src="/images/common/app-icon.png">
+                        <img alt="{{ config('installer.settings.name') }}"
+                             src="{{ config('installer.settings.icon') }}"
+                             class="h-12"
+                        >
                         <h2 class="pl-6 uppercase font-medium text-2xl text-gray-800">
-                            {{ config('app.name', 'Application') }} Installation
+                            {{ config('installer.settings.title') }}
                         </h2>
                     </div>
                 </div>
