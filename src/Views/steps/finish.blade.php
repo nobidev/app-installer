@@ -1,4 +1,4 @@
-@extends('installer::install')
+@extends('installer::layout.common')
 
 @section('step')
     <div class="bg-green-100 border-l-4 border-green-500 p-4 mb-6">

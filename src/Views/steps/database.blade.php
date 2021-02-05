@@ -1,4 +1,4 @@
-@extends('installer::install')
+@extends('installer::layout.common')
 
 @section('step')
     <p class="pb-3 text-gray-800">

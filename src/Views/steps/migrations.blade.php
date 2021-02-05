@@ -1,4 +1,4 @@
-@extends('installer::install')
+@extends('installer::layout.common')
 
 @section('step')
     @if(isset($error))
