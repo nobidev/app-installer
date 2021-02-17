@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace NobiDev\AppInstaller\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 use NobiDev\AppInstaller\Constant;
@@ -21,18 +22,29 @@ abstract class InstallController extends Controller
 {
     protected string $routePrefix = 'install';
 
-    public function index(): BaseResponse
+    public function index(Request $request): BaseResponse
     {
         $view_path = $this->getView();
         if (!$view_path) {
             throw new NotFoundHttpException();
         }
-        return Response::view(Helper::withNamespace($view_path), $this->getContextData());
+
+        $context_data = $this->getContextData($request);
+
+        if (
+            isset($context_data['url_next'], $context_data['allow_next'])
+            && $context_data['allow_next']
+            && $request->get('auto_next')
+        ) {
+            return redirect($context_data['url_next']);
+        }
+
+        return Response::view(Helper::withNamespace($view_path), $context_data);
     }
 
     abstract protected function getView(): ?string;
 
-    public function getContextData(): array
+    public function getContextData(Request $request): array
     {
         $namespace = Constant::getName();
         $icon = Helper::resolveConfig('icon');
@@ -41,8 +53,12 @@ abstract class InstallController extends Controller
         $name = __(Helper::resolveConfig('name'));
         $title = __(Helper::resolveConfig('title'), ['name' => $name]);
         $vendor = Helper::resolveConfig('vendor');
+        $url_retry = $request->fullUrlWithQuery(['retry' => 1 + $request->get('retry', 0)]);
 
-        $context_data = compact('namespace', 'icon', 'favicon', 'cover', 'name', 'title', 'vendor');
+        $context_data = compact(
+            'namespace', 'icon', 'favicon', 'cover', 'name',
+            'title', 'vendor', 'url_retry',
+        );
 
         $url_next = $this->getUrlNext();
         if ($url_next) {

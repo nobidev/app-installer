@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use function in_array;
 
 /**
- * Class InstallHelper
  * @package NobiDev\AppInstaller\Helpers
  */
 class InstallHelper
@@ -28,7 +27,7 @@ class InstallHelper
 
     public static function isServerReady(): bool
     {
-        return !in_array(false, ServerHelper::check(), true);
+        return ServerHelper::isOk();
     }
 
     public static function isFolderReady(): bool

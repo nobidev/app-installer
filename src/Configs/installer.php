@@ -6,11 +6,13 @@
 declare(strict_types=1);
 
 use NobiDev\AppInstaller\Constant;
+use NobiDev\AppInstaller\Helpers\Helper;
 
+/** @noinspection SpellCheckingInspection */
 return [
     'name' => config('app.name'),
     'vendor' => 'NobiDev',
-    'title' => Constant::getName() . '::common.title',
+    'title' => Helper::withNamespace('common.title'),
     'favicon' => '/images/common/icon.svg',
     'icon' => '/images/common/icon.svg',
     'cover' => '/images/common/cover.png',
@@ -35,5 +37,22 @@ return [
             'name_vi' => 'Quy Định Sử Dụng Nền Tảng Điện Toán Đám Mây',
             'url' => 'https://help.nobidev.com/Cloud_Computing_Platform_Use_Policy',
         ]
+    ],
+    'server' => [
+        'os' => 'Linux',
+        'sapi' => 'fpm-fcgi',
+        'php' => '7.4.0',
+    ],
+    'extensions' => [
+        'json',
+        'pdo',
+    ],
+    'permissions' => [
+        '/tmp',
+        '.env',
+        'storage/framework',
+        'storage/logs',
+        'bootstrap/cache',
+        'public/uploads'
     ],
 ];
