@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @package NobiDev\AppInstaller\Middleware
- * @noinspection PhpClassNamingConventionInspection
  */
 class InstallerMiddleware
 {

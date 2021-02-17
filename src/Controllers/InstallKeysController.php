@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 /**
  * @package NobiDev\AppInstaller\Controllers
- * @noinspection PhpClassNamingConventionInspection
  */
 class InstallKeysController extends Controller
 {

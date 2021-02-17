@@ -11,7 +11,6 @@ use Exception;
 
 /**
  * @package NobiDev\AppInstaller\Exceptions
- * @noinspection PhpClassNamingConventionInspection
  */
 class ApplicationInvalidException extends Exception
 {

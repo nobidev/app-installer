@@ -49,9 +49,6 @@ class AppInstaller implements AppInstallerContract
         return File::exists($this->getInstalledLockPath());
     }
 
-    /**
-     * @noinspection PhpMethodNamingConventionInspection
-     */
     public function getInstalledLockPath(): string
     {
         return storage_path('installed');
