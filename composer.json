@@ -5,8 +5,9 @@
   "require": {
     "php": "^7.4|^8.0",
     "laravel/framework": "^8.0",
-    "ext-json": "*",
-    "nobidev/app-envmanager": "^1.0"
+    "nobidev/app-envmanager": "^1.0",
+    "ext-pdo": "*",
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3"

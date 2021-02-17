@@ -6,14 +6,15 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use NobiDev\AppInstaller\Constant;
 
 Route::group([
     'prefix' => 'install',
     'as' => 'AppInstaller::',
     'namespace' => 'NobiDev\AppInstaller\Controllers',
-    'middleware' => ['web', 'installer']
+    'middleware' => ['web', Constant::getName()]
 ], static function () {
-    Route::get('/', ['as' => 'install.index', 'uses' => 'InstallIndexController@index']);
+    Route::get('/', ['as' => 'install.welcome', 'uses' => 'InstallWelcomeController@index']);
     Route::get('/server', ['as' => 'install.server', 'uses' => 'InstallServerController@index']);
     Route::get('/folders', ['as' => 'install.folders', 'uses' => 'InstallFolderController@index']);
     Route::get('/database', ['as' => 'install.database', 'uses' => 'InstallDatabaseController@database']);
