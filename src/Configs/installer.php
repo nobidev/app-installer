@@ -5,7 +5,6 @@
 
 declare(strict_types=1);
 
-use NobiDev\AppInstaller\Constant;
 use NobiDev\AppInstaller\Helpers\Helper;
 
 /** @noinspection SpellCheckingInspection */
@@ -41,11 +40,15 @@ return [
     'server' => [
         'os' => 'Linux',
         'sapi' => 'fpm-fcgi',
-        'php' => '7.4.0',
+        'php' => '7.4',
     ],
     'extensions' => [
-        'json',
-        'pdo',
+        'json' => '7',
+        'pdo' => '7',
+        'openssl' => '7',
+        'mbstring' => '7',
+        'curl' => '7',
+        'xdebug' => config('app.debug') ? '*' : 'false',
     ],
     'permissions' => [
         '/tmp',

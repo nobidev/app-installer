@@ -20,6 +20,9 @@
                 @else
                     @lang($namespace . '::server.' . $key)
                 @endif
+                @if(isset($item['required']))
+                    <small class="text-xs">(Required: {{ $item['required'] }})</small>
+                @endif
                 @if(isset($item['is_ok']))
                     <span class="float-right">
                     @if($item['is_ok'])

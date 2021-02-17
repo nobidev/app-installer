@@ -32,7 +32,7 @@ class InstallHelper
 
     public static function isFolderReady(): bool
     {
-        return !in_array(false, FolderHelper::check(), true);
+        return !in_array(false, PermissionHelper::check(), true);
     }
 
     public static function isDatabaseReady(): bool
