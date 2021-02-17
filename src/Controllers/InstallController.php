@@ -10,6 +10,7 @@ namespace NobiDev\AppInstaller\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 use NobiDev\AppInstaller\Constant;
+use NobiDev\AppInstaller\Helpers\Helper;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -26,7 +27,7 @@ abstract class InstallController extends Controller
         if (!$view_path) {
             throw new NotFoundHttpException();
         }
-        return Response::view($this->withNamespace($view_path), $this->getContextData());
+        return Response::view(Helper::withNamespace($view_path), $this->getContextData());
     }
 
     abstract protected function getView(): ?string;
@@ -34,12 +35,12 @@ abstract class InstallController extends Controller
     public function getContextData(): array
     {
         $namespace = Constant::getName();
-        $icon = $this->resolveConfig('icon');
-        $favicon = $this->resolveConfig('favicon');
-        $cover = $this->resolveConfig('cover');
-        $name = __($this->resolveConfig('name'));
-        $title = __($this->resolveConfig('title'), ['name' => $name]);
-        $vendor = $this->resolveConfig('vendor');
+        $icon = Helper::resolveConfig('icon');
+        $favicon = Helper::resolveConfig('favicon');
+        $cover = Helper::resolveConfig('cover');
+        $name = __(Helper::resolveConfig('name'));
+        $title = __(Helper::resolveConfig('title'), ['name' => $name]);
+        $vendor = Helper::resolveConfig('vendor');
 
         $context_data = compact('namespace', 'icon', 'favicon', 'cover', 'name', 'title', 'vendor');
 
@@ -49,11 +50,6 @@ abstract class InstallController extends Controller
         }
 
         return $context_data;
-    }
-
-    protected function resolveConfig(string $name, string $default = ''): string
-    {
-        return config($this->withNamespace($name, '.'), $default);
     }
 
     protected function getUrlNext(array $parameters = []): ?string
@@ -72,16 +68,6 @@ abstract class InstallController extends Controller
 
     protected function resolveRoute(string $name): string
     {
-        return $this->withNamespace(sprintf('%s.%s', $this->routePrefix, $name));
-    }
-
-    protected function resolveConfigArray(string $name, array $default = []): array
-    {
-        return config($this->withNamespace($name, '.'), $default);
-    }
-
-    protected function withNamespace(string $name, string $separator = '::'): string
-    {
-        return sprintf('%s%s%s', Constant::getName(), $separator, $name);
+        return Helper::withNamespace(sprintf('%s.%s', $this->routePrefix, $name));
     }
 }

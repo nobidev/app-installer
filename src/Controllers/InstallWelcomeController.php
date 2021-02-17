@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace NobiDev\AppInstaller\Controllers;
 
+use NobiDev\AppInstaller\Helpers\Helper;
+
 /**
  * @package NobiDev\AppInstaller\Controllers
  */
@@ -14,9 +16,9 @@ class InstallWelcomeController extends InstallController
 {
     public function getContextData(): array
     {
-        $policies = $this->resolveConfigArray('policies');
-        $help_url = $this->resolveConfig('help_url');
-        $purpose = __($this->resolveConfig('purpose_' . app()->getLocale()));
+        $policies = Helper::resolveConfigArray('policies');
+        $help_url = Helper::resolveConfig('help_url');
+        $purpose = __(Helper::resolveConfig('purpose_' . app()->getLocale()));
 
         return array_merge(
             parent::getContextData(),
