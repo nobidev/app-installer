@@ -10,6 +10,7 @@ namespace NobiDev\AppInstaller\Middleware;
 use AppInstaller;
 use Closure;
 use Illuminate\Http\Request;
+use NobiDev\AppInstaller\Constant;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -20,7 +21,7 @@ class ToInstallMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!AppInstaller::alreadyInstalled() && explode('/', $request->route() ? $request->route()->uri() : '')[0] !== 'install') {
-            return redirect()->route('AppInstaller::install.welcome');
+            return redirect()->route(Constant::getName() . '::install.welcome');
         }
         return $next($request);
     }

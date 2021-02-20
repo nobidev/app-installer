@@ -10,7 +10,7 @@ use NobiDev\AppInstaller\Constant;
 
 Route::group([
     'prefix' => 'install',
-    'as' => 'AppInstaller::',
+    'as' => Constant::getName() . '::',
     'namespace' => 'NobiDev\AppInstaller\Controllers',
     'middleware' => ['web', Constant::getName()]
 ], static function () {

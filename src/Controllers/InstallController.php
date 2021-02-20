@@ -76,7 +76,7 @@ abstract class InstallController extends Controller
         }
         return route(
             $this->resolveRoute($route_next),
-            array_merge(['auto_next' => false], $parameters),
+            array_merge(['auto_next' => !config('app.debug')], $parameters),
         );
     }
 
