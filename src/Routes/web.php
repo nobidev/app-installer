@@ -16,7 +16,7 @@ Route::group([
 ], static function () {
     Route::get('/', ['as' => 'install.welcome', 'uses' => 'InstallWelcomeController@index']);
     Route::get('/server', ['as' => 'install.server', 'uses' => 'InstallServerController@index']);
-    Route::get('/folders', ['as' => 'install.folders', 'uses' => 'InstallFolderController@index']);
+    Route::get('/permission', ['as' => 'install.permission', 'uses' => 'InstallPermissionController@index']);
     Route::get('/database', ['as' => 'install.database', 'uses' => 'InstallDatabaseController@database']);
     Route::post('/database', ['as' => 'install.setDatabase', 'uses' => 'InstallDatabaseController@setDatabase']);
     Route::get('/migrations', ['as' => 'install.migrations', 'uses' => 'InstallDatabaseController@migrations']);

@@ -20,7 +20,7 @@ class ToInstallMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!AppInstaller::alreadyInstalled() && explode('/', $request->route() ? $request->route()->uri() : '')[0] !== 'install') {
-            return redirect()->route('AppInstaller::install.index');
+            return redirect()->route('AppInstaller::install.welcome');
         }
         return $next($request);
     }

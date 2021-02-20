@@ -25,4 +25,12 @@ class PathHelper
         }
         return $root_path;
     }
+
+    public static function realPath(string $path): string
+    {
+        if (strncmp($path, DIRECTORY_SEPARATOR, 1) === 0) {
+            return $path;
+        }
+        return static::findRootPath() . DIRECTORY_SEPARATOR . $path;
+    }
 }

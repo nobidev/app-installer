@@ -9,17 +9,17 @@ namespace NobiDev\AppInstaller\Controllers;
 
 use Illuminate\Http\Request;
 use NobiDev\AppInstaller\Helpers\InstallHelper;
-use NobiDev\AppInstaller\Helpers\ServerHelper;
+use NobiDev\AppInstaller\Helpers\PermissionHelper;
 
 /**
  * @package NobiDev\AppInstaller\Controllers
  */
-class InstallServerController extends InstallController
+class InstallPermissionController extends InstallController
 {
     public function getContextData(Request $request): array
     {
-        $result = ServerHelper::getResult();
-        $allow_next = InstallHelper::isServerReady();
+        $result = PermissionHelper::getResult();
+        $allow_next = InstallHelper::isPermissionReady();
 
         return array_merge(
             parent::getContextData($request),
@@ -29,11 +29,11 @@ class InstallServerController extends InstallController
 
     protected function getView(): ?string
     {
-        return 'steps.server';
+        return 'steps.permission';
     }
 
     protected function getRouteNext(): ?string
     {
-        return 'permission';
+        return 'database';
     }
 }

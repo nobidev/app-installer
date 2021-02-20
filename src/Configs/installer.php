@@ -49,13 +49,15 @@ return [
         'mbstring' => '7',
         'curl' => '7',
         'xdebug' => config('app.debug') ? '*' : 'false',
+        'extension_not_exist' => 'false',
     ],
     'permissions' => [
-        '/tmp',
-        '.env',
-        'storage/framework',
-        'storage/logs',
-        'bootstrap/cache',
-        'public/uploads'
+        '/tmp' => '1777',
+        '.env' => '0644',
+        'storage/framework' => '0775',
+        'storage/logs' => '0775',
+        'bootstrap/cache' => '0775',
+        'public/uploads' => '0775',
+        '/file_not_exist' => 'false',
     ],
 ];

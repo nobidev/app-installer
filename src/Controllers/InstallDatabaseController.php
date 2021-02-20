@@ -25,7 +25,7 @@ class InstallDatabaseController extends Controller
     public function database(): BaseResponse
     {
         if (!InstallHelper::isSystemReady()) {
-            return redirect()->route('AppInstaller::install.folders');
+            return redirect()->route('AppInstaller::install.permission');
         }
         return Response::view('installer::steps.database');
     }

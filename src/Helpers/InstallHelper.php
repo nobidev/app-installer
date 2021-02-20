@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace NobiDev\AppInstaller\Helpers;
 
 use Illuminate\Support\Facades\DB;
-use function in_array;
 
 /**
  * @package NobiDev\AppInstaller\Helpers
@@ -22,7 +21,7 @@ class InstallHelper
 
     public static function isSystemReady(): bool
     {
-        return self::isServerReady() && self::isFolderReady();
+        return self::isServerReady() && self::isPermissionReady();
     }
 
     public static function isServerReady(): bool
@@ -30,9 +29,9 @@ class InstallHelper
         return ServerHelper::isOk();
     }
 
-    public static function isFolderReady(): bool
+    public static function isPermissionReady(): bool
     {
-        return !in_array(false, PermissionHelper::check(), true);
+        return PermissionHelper::isOk();
     }
 
     public static function isDatabaseReady(): bool
