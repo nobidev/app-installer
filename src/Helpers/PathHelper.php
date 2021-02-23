@@ -18,7 +18,7 @@ class PathHelper
     {
         $root_path = __DIR__;
         while (strrpos($root_path, DIRECTORY_SEPARATOR) !== false) {
-            if (File::exists($root_path . '/.env')) {
+            if (File::exists($root_path . DIRECTORY_SEPARATOR . '.env')) {
                 break;
             }
             $root_path = substr($root_path, 0, strrpos($root_path, DIRECTORY_SEPARATOR));
@@ -32,5 +32,17 @@ class PathHelper
             return $path;
         }
         return static::findRootPath() . DIRECTORY_SEPARATOR . $path;
+    }
+
+    public static function getEnvPath(): string
+    {
+        return self::findRootPath() . DIRECTORY_SEPARATOR . '.env';
+    }
+
+    public static function checkWritableEnv(array &$result): void
+    {
+        $result['writable_env'] = [
+            'is_ok' => File::isWritable(self::getEnvPath()),
+        ];
     }
 }

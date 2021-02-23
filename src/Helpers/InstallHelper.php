@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace NobiDev\AppInstaller\Helpers;
 
-use Illuminate\Support\Facades\DB;
-
 /**
  * @package NobiDev\AppInstaller\Helpers
  */
@@ -36,6 +34,6 @@ class InstallHelper
 
     public static function isDatabaseReady(): bool
     {
-        return (bool)DB::connection()->getPdo();
+        return DatabaseHelper::isOk();
     }
 }

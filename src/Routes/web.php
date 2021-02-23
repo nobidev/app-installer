@@ -17,9 +17,9 @@ Route::group([
     Route::get('/', ['as' => 'install.welcome', 'uses' => 'InstallWelcomeController@index']);
     Route::get('/server', ['as' => 'install.server', 'uses' => 'InstallServerController@index']);
     Route::get('/permission', ['as' => 'install.permission', 'uses' => 'InstallPermissionController@index']);
-    Route::get('/database', ['as' => 'install.database', 'uses' => 'InstallDatabaseController@database']);
-    Route::post('/database', ['as' => 'install.setDatabase', 'uses' => 'InstallDatabaseController@setDatabase']);
-    Route::get('/migrations', ['as' => 'install.migrations', 'uses' => 'InstallDatabaseController@migrations']);
+    Route::get('/database', ['as' => 'install.database', 'uses' => 'InstallDatabaseController@index']);
+    Route::post('/database', ['uses' => 'InstallDatabaseController@submit']);
+    Route::get('/migrations', ['as' => 'install.migration', 'uses' => 'InstallDatabaseController@migrations']);
     Route::post('/migrations', ['as' => 'install.runMigrations', 'uses' => 'InstallDatabaseController@runMigrations']);
     Route::get('/keys', ['as' => 'install.keys', 'uses' => 'InstallKeysController@index']);
     Route::post('/keys', ['as' => 'install.setKeys', 'uses' => 'InstallKeysController@setKeys']);

@@ -42,6 +42,16 @@ abstract class InstallController extends Controller
         return Response::view(Helper::withNamespace($view_path), $context_data);
     }
 
+    protected function setState(array $data): void
+    {
+    }
+
+    public function submit(Request $request): BaseResponse
+    {
+        $this->setState($request->all());
+        return $this->index($request);
+    }
+
     abstract protected function getView(): ?string;
 
     public function getContextData(Request $request): array

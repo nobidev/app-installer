@@ -30,6 +30,29 @@ class Helper
         return sprintf('%s%s%s', Constant::getName(), $separator, $name);
     }
 
+    public static function getConfigMapping(): array
+    {
+        return [];
+    }
+
+    public static function getValue(): array
+    {
+        return array_map(static function ($item) {
+            return config($item);
+        }, static::getConfigMapping());
+    }
+
+    public static function setRuntime(array $data): void
+    {
+        $mapping = static::getConfigMapping();
+        foreach ($data as $key => $value) {
+            if (isset($mapping[$key])) {
+                $config_key = $mapping[$key];
+                config([$config_key => $value]);
+            }
+        }
+    }
+
     public static function getResult(): array
     {
         return [];
