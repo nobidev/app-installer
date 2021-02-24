@@ -35,7 +35,7 @@ class InstallDatabaseController extends InstallController
                     continue;
                 }
                 $env = $mapping[$key];
-                if ($env) {
+                if ($env && $value) {
                     EnvManager::setKey($env, $value);
                 }
             }
