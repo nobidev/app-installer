@@ -25,5 +25,7 @@ Route::group([
     Route::post('/system', ['uses' => 'InstallSystemController@submit']);
     Route::get('/owner', ['as' => 'install.owner', 'uses' => 'InstallOwnerController@index']);
     Route::post('/owner', ['uses' => 'InstallOwnerController@submit']);
+    Route::get('/seed', ['as' => 'install.seed', 'uses' => 'InstallSeedController@index']);
+    Route::post('/seed', ['uses' => 'InstallSeedController@submit']);
     Route::get('/finish', ['as' => 'install.finish', 'uses' => 'InstallIndexController@finish']);
 });
