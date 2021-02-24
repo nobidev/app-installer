@@ -7,14 +7,22 @@ declare(strict_types=1);
 
 namespace NobiDev\AppInstaller\Controllers;
 
+use AppInstaller;
 use Illuminate\Http\Request;
 use NobiDev\AppInstaller\Helpers\Helper;
+use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 /**
  * @package NobiDev\AppInstaller\Controllers
  */
 class InstallFinishController extends InstallController
 {
+    public function index(Request $request): BaseResponse
+    {
+        AppInstaller::setAsInstalled();
+        return parent::index($request);
+    }
+
     public function getContextData(Request $request): array
     {
         $second = 5;
