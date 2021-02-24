@@ -20,26 +20,14 @@ class Helper
         return config(static::withNamespace($name, '.'), $default);
     }
 
-    public static function resolveConfigArray(string $name, array $default = []): array
-    {
-        return config(static::withNamespace($name, '.'), $default);
-    }
-
     public static function withNamespace(string $name, string $separator = '::'): string
     {
         return sprintf('%s%s%s', Constant::getName(), $separator, $name);
     }
 
-    public static function getConfigMapping(): array
+    public static function resolveConfigArray(string $name, array $default = []): array
     {
-        return [];
-    }
-
-    public static function getValue(): array
-    {
-        return array_map(static function ($item) {
-            return config($item);
-        }, static::getConfigMapping());
+        return config(static::withNamespace($name, '.'), $default);
     }
 
     public static function setRuntime(array $data): void
@@ -51,6 +39,16 @@ class Helper
                 config([$config_key => $value]);
             }
         }
+    }
+
+    public static function getConfigMapping(): array
+    {
+        return [];
+    }
+
+    public static function isOk(): bool
+    {
+        return !in_array(false, array_column(static::getResult(), 'is_ok'), true);
     }
 
     public static function getResult(): array
@@ -67,8 +65,10 @@ class Helper
         return $result;
     }
 
-    public static function isOk(): bool
+    public static function getValue(): array
     {
-        return !in_array(false, array_column(static::getResult(), 'is_ok'), true);
+        return array_map(static function ($item) {
+            return config($item);
+        }, static::getConfigMapping());
     }
 }
