@@ -19,14 +19,6 @@ class InstallMigrationController extends InstallController
     protected ?int $code = null;
     protected ?string $result = null;
 
-
-    protected function setState(array $data): void
-    {
-        parent::setState($data);
-        $this->code = Artisan::call('migrate');
-        $this->result = Artisan::output();
-    }
-
     public function getContextData(Request $request): array
     {
         $result = [
@@ -42,6 +34,13 @@ class InstallMigrationController extends InstallController
             parent::getContextData($request),
             compact('result', 'auto_confirm', 'allow_next'),
         );
+    }
+
+    protected function setState(array $data): void
+    {
+        parent::setState($data);
+        $this->code = Artisan::call('migrate');
+        $this->result = Artisan::output();
     }
 
     protected function getView(): ?string
