@@ -17,18 +17,42 @@ use function extension_loaded;
  */
 class ServerHelper extends Helper
 {
-    protected static function checkExtension(string $name, ?string $required = null): array
+    public static function getResult(): array
     {
-        $is_loaded = extension_loaded($name);
-        $value = phpversion($name);
-        $is_ok = $is_loaded;
-        if ($is_ok && $required) {
-            $is_ok = version_compare($value, $required, '>=');
+        $os = PHP_OS;
+        $os_required = self::resolveConfig('server.os');
+
+        $sapi = PHP_SAPI;
+        $sapi_required = self::resolveConfig('server.sapi');
+
+        $php_version = PHP_VERSION;
+        $php_version_required = self::resolveConfig('server.php');
+
+        $result = [
+            'os' => [
+                'value' => $os,
+                'required' => $os_required,
+                'is_ok' => $os === $os_required,
+            ],
+            'sapi' => [
+                'value' => $sapi,
+                'required' => $sapi_required,
+                'is_ok' => $sapi === $sapi_required,
+            ],
+            'php_version' => [
+                'value' => $php_version,
+                'required' => $php_version_required,
+                'is_ok' => version_compare($php_version, $php_version_required, '>='),
+            ],
+        ];
+
+        foreach (self::checkExtensions() as $extension => $data) {
+            $result[sprintf('extension_%s', $extension)] = array_merge($data, compact('extension'), [
+                'label' => 'extension',
+            ]);
         }
-        if ($required === 'false') {
-            $is_ok = !$is_loaded;
-        }
-        return compact('is_loaded', 'value', 'required', 'is_ok');
+
+        return array_merge(parent::getResult(), $result);
     }
 
     protected static function checkExtensions(bool $development = false): array
@@ -67,41 +91,17 @@ class ServerHelper extends Helper
         return $extensions;
     }
 
-    public static function getResult(): array
+    protected static function checkExtension(string $name, ?string $required = null): array
     {
-        $os = PHP_OS;
-        $os_required = self::resolveConfig('server.os');
-
-        $sapi = PHP_SAPI;
-        $sapi_required = self::resolveConfig('server.sapi');
-
-        $php_version = PHP_VERSION;
-        $php_version_required = self::resolveConfig('server.php');
-
-        $result = [
-            'os' => [
-                'value' => $os,
-                'required' => $os_required,
-                'is_ok' => $os === $os_required,
-            ],
-            'sapi' => [
-                'value' => $sapi,
-                'required' => $sapi_required,
-                'is_ok' => $sapi === $sapi_required,
-            ],
-            'php_version' => [
-                'value' => $php_version,
-                'required' => $php_version_required,
-                'is_ok' => version_compare($php_version, $php_version_required, '>='),
-            ],
-        ];
-
-        foreach (self::checkExtensions() as $extension => $data) {
-            $result[sprintf('extension_%s', $extension)] = array_merge($data, compact('extension'), [
-                'label' => 'extension',
-            ]);
+        $is_loaded = extension_loaded($name);
+        $value = phpversion($name);
+        $is_ok = $is_loaded;
+        if ($is_ok && $required) {
+            $is_ok = version_compare($value, $required, '>=');
         }
-
-        return array_merge(parent::getResult(), $result);
+        if ($required === 'false') {
+            $is_ok = !$is_loaded;
+        }
+        return compact('is_loaded', 'value', 'required', 'is_ok');
     }
 }
