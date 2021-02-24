@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\File;
  */
 class PathHelper
 {
+    public static function realPath(string $path): string
+    {
+        if (strncmp($path, DIRECTORY_SEPARATOR, 1) === 0) {
+            return $path;
+        }
+        return static::findRootPath() . DIRECTORY_SEPARATOR . $path;
+    }
+
     public static function findRootPath(): string
     {
         $root_path = __DIR__;
@@ -26,23 +34,15 @@ class PathHelper
         return $root_path;
     }
 
-    public static function realPath(string $path): string
-    {
-        if (strncmp($path, DIRECTORY_SEPARATOR, 1) === 0) {
-            return $path;
-        }
-        return static::findRootPath() . DIRECTORY_SEPARATOR . $path;
-    }
-
-    public static function getEnvPath(): string
-    {
-        return self::findRootPath() . DIRECTORY_SEPARATOR . '.env';
-    }
-
     public static function checkWritableEnv(array &$result): void
     {
         $result['writable_env'] = [
             'is_ok' => File::isWritable(self::getEnvPath()),
         ];
+    }
+
+    public static function getEnvPath(): string
+    {
+        return self::findRootPath() . DIRECTORY_SEPARATOR . '.env';
     }
 }
