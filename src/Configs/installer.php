@@ -60,4 +60,11 @@ return [
         'public/uploads' => '0775',
         '/file_not_exist' => 'false',
     ],
+    'user' => [
+        'model_type' => \App\User::class,
+        'name' => 'Owner',
+        'username' => 'owner',
+        'password' => 'owner',
+        'email' => 'owner@example.com',
+    ]
 ];

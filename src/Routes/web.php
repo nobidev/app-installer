@@ -23,5 +23,7 @@ Route::group([
     Route::post('/migration', ['uses' => 'InstallMigrationController@submit']);
     Route::get('/system', ['as' => 'install.system', 'uses' => 'InstallSystemController@index']);
     Route::post('/system', ['uses' => 'InstallSystemController@submit']);
+    Route::get('/owner', ['as' => 'install.owner', 'uses' => 'InstallOwnerController@index']);
+    Route::post('/owner', ['uses' => 'InstallOwnerController@submit']);
     Route::get('/finish', ['as' => 'install.finish', 'uses' => 'InstallIndexController@finish']);
 });
