@@ -20,17 +20,6 @@ class InstallOwnerController extends InstallController
     protected ?string $value = null;
     protected bool $is_ok = false;
 
-    protected function setState(array $data): void
-    {
-        parent::setState($data);
-        try {
-            OwnerHelper::setRuntime($data);
-            $this->is_ok = true;
-        } catch (Exception $error) {
-            $this->value = $error->getMessage();
-        }
-    }
-
     public function getContextData(Request $request): array
     {
         $result = OwnerHelper::getResult();
@@ -44,6 +33,17 @@ class InstallOwnerController extends InstallController
             parent::getContextData($request),
             compact('result', 'allow_next'),
         );
+    }
+
+    protected function setState(array $data): void
+    {
+        parent::setState($data);
+        try {
+            OwnerHelper::setRuntime($data);
+            $this->is_ok = true;
+        } catch (Exception $error) {
+            $this->value = $error->getMessage();
+        }
     }
 
     protected function getView(): ?string

@@ -15,11 +15,6 @@ use function call_user_func;
  */
 class OwnerHelper extends Helper
 {
-    protected static function getConfigKey(string $key): string
-    {
-        return sprintf('%s.user.%s', Constant::getName(), $key);
-    }
-
     public static function getConfigMapping(): array
     {
         return array_merge(parent::getConfigMapping(), [
@@ -28,6 +23,11 @@ class OwnerHelper extends Helper
             'password' => self::getConfigKey('password'),
             'email' => self::getConfigKey('email'),
         ]);
+    }
+
+    protected static function getConfigKey(string $key): string
+    {
+        return sprintf('%s.user.%s', Constant::getName(), $key);
     }
 
     public static function getValue(): array
