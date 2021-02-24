@@ -10,6 +10,7 @@ namespace NobiDev\AppInstaller\Controllers;
 use AppInstaller;
 use Illuminate\Http\Request;
 use NobiDev\AppInstaller\Helpers\Helper;
+use NobiDev\AppInstaller\Helpers\InstallHelper;
 use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 /**
@@ -19,8 +20,11 @@ class InstallFinishController extends InstallController
 {
     public function index(Request $request): BaseResponse
     {
-        AppInstaller::setAsInstalled();
-        return parent::index($request);
+        if (InstallHelper::isReady()) {
+            AppInstaller::setAsInstalled();
+            return parent::index($request);
+        }
+        return redirect($this->getUrlNext($request->query()), ['install' => 'failed']);
     }
 
     public function getContextData(Request $request): array
@@ -41,6 +45,8 @@ class InstallFinishController extends InstallController
 
     protected function getUrlNext(array $parameters = []): ?string
     {
-        return parent::getUrlNext() ?? route(Helper::resolveConfig('finished_route'), $parameters);
+        return parent::getUrlNext() ?? route(Helper::resolveConfig('finished_route'),
+                array_merge($parameters, ['install' => 'succeed'])
+            );
     }
 }
