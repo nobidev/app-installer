@@ -18,9 +18,6 @@ interface AppInstaller
 
     public function load(): AppInstaller;
 
-    /**
-     * @noinspection PhpMethodNamingConventionInspection
-     */
     public function getInstalledLockPath(): string;
 
     public function alreadyInstalled(): bool;

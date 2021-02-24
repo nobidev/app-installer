@@ -18,18 +18,21 @@ use NobiDev\AppInstaller\Middleware\ToInstallMiddleware;
  */
 class ServiceProvider extends BaseServiceProvider
 {
+    protected string $webRouteGroup = 'web';
+
     public function register(): void
     {
         parent::register();
         $this->app->bind(Constant::getName(), AppInstaller::class);
-        $this->mergeConfigFrom(__DIR__ . '/Configs/installer.php', 'installer');
+        $this->mergeConfigFrom(__DIR__ . '/Configs/installer.php', Constant::getName());
         $this->loadRoutesFrom(__DIR__ . '/Routes/web.php');
-        $this->loadViewsFrom(__DIR__ . '/Views', 'installer');
+        $this->loadViewsFrom(__DIR__ . '/Views', Constant::getName());
     }
 
     public function boot(Router $router, Kernel $kernel): void
     {
-        $kernel->prependMiddlewareToGroup('web', ToInstallMiddleware::class);
-        $router->pushMiddlewareToGroup('installer', InstallerMiddleware::class);
+        $kernel->prependMiddlewareToGroup($this->webRouteGroup, ToInstallMiddleware::class);
+        $router->pushMiddlewareToGroup(Constant::getName(), InstallerMiddleware::class);
+        $this->loadTranslationsFrom(__DIR__ . '/Translations', Constant::getName());
     }
 }

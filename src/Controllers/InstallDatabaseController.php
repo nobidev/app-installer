@@ -8,90 +8,59 @@ declare(strict_types=1);
 namespace NobiDev\AppInstaller\Controllers;
 
 use EnvManager;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Response;
+use NobiDev\AppInstaller\Helpers\DatabaseHelper;
 use NobiDev\AppInstaller\Helpers\InstallHelper;
-use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 /**
  * @package NobiDev\AppInstaller\Controllers
- * @noinspection PhpClassNamingConventionInspection
  */
-class InstallDatabaseController extends Controller
+class InstallDatabaseController extends InstallController
 {
-    public function database(): BaseResponse
+    public function getContextData(Request $request): array
     {
-        if (!InstallHelper::isSystemReady()) {
-            return redirect()->route('AppInstaller::install.folders');
-        }
-        return Response::view('installer::steps.database');
+        $result = DatabaseHelper::getResult();
+        $allow_next = InstallHelper::isDatabaseReady();
+
+        return array_merge(
+            parent::getContextData($request),
+            compact('result', 'allow_next'),
+        );
     }
 
-    public function setDatabase(Request $request): BaseResponse
+    protected function setState(array $data): void
     {
-        try {
-            $this->setEnv($request);
-            return redirect()->route('AppInstaller::install.migrations');
-        } catch (Exception $error) {
-            return Response::view('installer::steps.database', ['values' => [], 'error' => $error->getMessage()]);
+        parent::setState($data);
+        DatabaseHelper::setRuntime($data);
+        if (InstallHelper::isDatabaseReady()) {
+            $mapping = [
+                'db_url' => 'DATABASE_URL',
+                'db_host' => 'DB_HOST',
+                'db_port' => 'DB_PORT',
+                'db_name' => 'DB_DATABASE',
+                'db_user' => 'DB_USERNAME',
+                'db_password' => 'DB_PASSWORD',
+            ];
+            foreach ($data as $key => $value) {
+                if (!isset($mapping[$key])) {
+                    continue;
+                }
+                $env = $mapping[$key];
+                if ($env && $value) {
+                    EnvManager::setKey($env, $value);
+                }
+            }
+            EnvManager::save();
         }
     }
 
-    public function setEnv(Request $request): void
+    protected function getView(): ?string
     {
-        // Database
-        EnvManager::setKey('DB_HOST', $request->input('database_hostname'));
-        EnvManager::setKey('DB_PORT', $request->input('database_port'));
-        EnvManager::setKey('DB_DATABASE', $request->input('database_name'));
-        EnvManager::setKey('DB_USERNAME', $request->input('database_username'));
-        EnvManager::setKey('DB_PASSWORD', $request->input('database_password'));
-        EnvManager::setKey('DB_PREFIX', $request->input('database_prefix'));
-
-        // Admin
-        EnvManager::setKey('ADMIN_EMAIL', $request->input('admin_email'));
-        EnvManager::setKey('ADMIN_PASSWORD', $request->input('admin_password'));
-
-        // App
-        EnvManager::setKey('APP_NAME', $request->input('projectname'));
-        EnvManager::setKey('APP_URL', $request->input('projecturl'));
-
-        Artisan::call('config:clear');
-        Artisan::call('cache:clear');
-        Cache::flush();
+        return 'steps.database';
     }
 
-    public function migrations(): BaseResponse
+    protected function getRouteNext(): ?string
     {
-        if (!InstallHelper::isReady()) {
-            return redirect()->route('AppInstaller::install.database');
-        }
-        return Response::view('installer::steps.migrations');
-    }
-
-    public function runMigrations(): BaseResponse
-    {
-        if (!InstallHelper::isReady()) {
-            return redirect()->route('AppInstaller::install.database');
-        }
-        return $this->processRunMigrations();
-    }
-
-    /**
-     * @noinspection PhpMethodNamingConventionInspection
-     */
-    protected function processRunMigrations(): BaseResponse
-    {
-        try {
-            Artisan::call('migrate', ['--seed' => true]);
-            return redirect()->route('AppInstaller::install.keys');
-        } catch (Exception $error) {
-            return Response::view('installer::steps.migrations', [
-                'error' => $error->getMessage() ?: 'An error occurred while executing migrations'
-            ]);
-        }
+        return 'migration';
     }
 }

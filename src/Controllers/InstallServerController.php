@@ -7,20 +7,33 @@ declare(strict_types=1);
 
 namespace NobiDev\AppInstaller\Controllers;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Request;
+use NobiDev\AppInstaller\Helpers\InstallHelper;
 use NobiDev\AppInstaller\Helpers\ServerHelper;
-use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 /**
  * @package NobiDev\AppInstaller\Controllers
- * @noinspection PhpClassNamingConventionInspection
  */
-class InstallServerController extends Controller
+class InstallServerController extends InstallController
 {
-
-    public function index(): BaseResponse
+    public function getContextData(Request $request): array
     {
-        return Response::view('installer::steps.server', ['checks' => ServerHelper::check()]);
+        $result = ServerHelper::getResult();
+        $allow_next = InstallHelper::isServerReady();
+
+        return array_merge(
+            parent::getContextData($request),
+            compact('result', 'allow_next'),
+        );
+    }
+
+    protected function getView(): ?string
+    {
+        return 'steps.server';
+    }
+
+    protected function getRouteNext(): ?string
+    {
+        return 'permission';
     }
 }

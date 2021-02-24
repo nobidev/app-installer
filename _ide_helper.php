@@ -8,8 +8,6 @@
  * @noinspection PhpMissingDocCommentInspection
  * @noinspection EmptyClassInspection
  * @noinspection PhpUnhandledExceptionInspection
- * @noinspection PhpMethodNamingConventionInspection
- * @noinspection PhpClassNamingConventionInspection
  * @noinspection PhpUnused
  */
 
