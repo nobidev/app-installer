@@ -22,6 +22,16 @@ abstract class InstallController extends Controller
 {
     protected string $routePrefix = 'install';
 
+    public function submit(Request $request): BaseResponse
+    {
+        $this->setState($request->all());
+        return $this->index($request);
+    }
+
+    protected function setState(array $data): void
+    {
+    }
+
     public function index(Request $request): BaseResponse
     {
         $view_path = $this->getView();
@@ -40,16 +50,6 @@ abstract class InstallController extends Controller
         }
 
         return Response::view(Helper::withNamespace($view_path), $context_data);
-    }
-
-    protected function setState(array $data): void
-    {
-    }
-
-    public function submit(Request $request): BaseResponse
-    {
-        $this->setState($request->all());
-        return $this->index($request);
     }
 
     abstract protected function getView(): ?string;
