@@ -37,6 +37,14 @@ class InstallSeedController extends InstallController
         );
     }
 
+    public function index(Request $request): BaseResponse
+    {
+        if (config('app.is_demo')) {
+            return parent::index($request);
+        }
+        return redirect($this->getUrlNext($request->query()));
+    }
+
     protected function setState(array $data): void
     {
         parent::setState($data);
@@ -52,13 +60,5 @@ class InstallSeedController extends InstallController
     protected function getRouteNext(): ?string
     {
         return 'finish';
-    }
-
-    public function index(Request $request): BaseResponse
-    {
-        if (config('app.is_demo')) {
-            return parent::index($request);
-        }
-        return redirect($this->getUrlNext($request->query()));
     }
 }
