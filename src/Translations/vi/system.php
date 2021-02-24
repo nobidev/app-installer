@@ -9,4 +9,5 @@ return [
     'app_url' => 'URL',
     'app_asset_url' => 'URL tài nguyên',
     'app_locale' => 'Ngôn ngữ',
+    'is_demo' => 'Bật chế độ Demo',
 ];

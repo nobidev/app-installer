@@ -9,6 +9,7 @@ namespace NobiDev\AppInstaller\Controllers;
 
 use EnvManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use NobiDev\AppInstaller\Helpers\SystemHelper;
 use ResourceBundle;
 
@@ -28,6 +29,7 @@ class InstallSystemController extends InstallController
             'app_url' => 'APP_URL',
             'app_asset_url' => 'ASSET_URL',
             'locale' => 'APP_LOCALE',
+            'is_demo' => 'IS_DEMO',
         ];
         foreach ($data as $key => $value) {
             if (!isset($mapping[$key])) {
@@ -39,7 +41,7 @@ class InstallSystemController extends InstallController
             }
         }
         EnvManager::save();
-        $this->allow_next = true;
+        $this->allow_next = Artisan::call('key:generate --ansi') === 0;
     }
 
     public function getContextData(Request $request): array

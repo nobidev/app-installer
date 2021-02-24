@@ -27,29 +27,54 @@
     @endif
     <form method="POST" action="{{ $url_retry }}">
         @csrf
-        @foreach(['app_name', 'app_url', 'app_asset_url', 'app_locale'] as $field)
+        @foreach(['app_name', 'app_url', 'app_asset_url', 'app_locale', 'is_demo'] as $field)
             <div class="mb-3 p-3 rounded-lg {{ $result[$field]['is_ok'] ?: 'border border-red-500' }}">
-                <label for="{{ $field }}" class="block font-medium leading-5 text-gray-700 pb-2">
-                    @lang($namespace . '::system.' . $field)
-                </label>
+                @if($field !== 'is_demo')
+                    <label for="{{ $field }}" class="block font-medium leading-5 text-gray-700 pb-2">
+                        @lang($namespace . '::system.' . $field)
+                    </label>
+                @endif
                 @if($field === 'app_locale')
                     <select class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="{{ $field }}" name="{{ $field }}"
+                            {{ $allow_next ? 'disabled': '' }}
                     >
                         @foreach($locales as $locale => $name)
                             <option value="{{ $locale }}">{{ $name }}</option>
                         @endforeach
                     </select>
                     <script>
-                        const select = document.querySelector('#{{ $field }}');
-                        select.value = '{{ $result[$field]['value'] }}';
+                        (() => {
+                            const select = document.querySelector('#{{ $field }}');
+                            select.value = '{{ $result[$field]['value'] }}';
+                        })();
                     </script>
+                @elseif($field === 'is_demo')
+                    <label class="flex items-center space-x-3" for="{{ $field }}">
+                        <input type="hidden" name="{{ $field }}" value="false"/>
+                        <input type="checkbox" id="{{ $field }}" name="{{ $field }}" value="true"
+                               class="form-checkbox h-6 w-6 text-green-600"
+                                {{ $allow_next ? 'disabled': '' }}
+                        />
+                        <span class="text-gray-900 font-medium">
+                            @lang($namespace . '::system.' . $field)
+                        </span>
+                    </label>
+                    @if($result[$field]['value'])
+                        <script>
+                            (() => {
+                                const checkbox = document.querySelector('#{{ $field }}');
+                                checkbox.checked = true;
+                            })();
+                        </script>
+                    @endif
                 @else
                     <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                            id="{{ $field }}" name="{{ $field }}"
                            type="text"
                            placeholder="@lang($namespace . '::system.' . $field)"
                            value="{{ $result[$field]['value'] }}"
+                            {{ $allow_next ? 'disabled': '' }}
                     />
                 @endif
             </div>

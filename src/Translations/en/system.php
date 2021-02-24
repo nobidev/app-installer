@@ -9,4 +9,5 @@ return [
     'app_url' => 'URL',
     'app_asset_url' => 'Asset URL',
     'app_locale' => 'Locale',
+    'is_demo' => 'Activate Demo mode',
 ];

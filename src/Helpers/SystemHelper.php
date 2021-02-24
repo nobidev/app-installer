@@ -19,6 +19,7 @@ class SystemHelper extends Helper
             'app_url' => 'app.url',
             'app_asset_url' => 'app.asset_url',
             'app_locale' => 'app.locale',
+            'is_demo' => 'app.is_demo',
         ]);
     }
 
