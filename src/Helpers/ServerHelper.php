@@ -61,7 +61,7 @@ class ServerHelper extends Helper
         foreach (self::resolveConfigArray('extensions') as $extension => $version_required) {
             $extensions[$extension] = self::checkExtension($extension, $version_required);
         }
-        $composer_lock = PathHelper::findRootPath() . '/composer.lock';
+        $composer_lock = base_path() . DIRECTORY_SEPARATOR . 'composer.lock';
         if (File::exists($composer_lock)) {
             try {
                 $composer_data = json_decode(File::get($composer_lock), true, 512, JSON_THROW_ON_ERROR);
