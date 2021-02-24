@@ -7,7 +7,7 @@
 @include($namespace . '::layouts.preset')
 
 @section('body')
-    <div class="h-screen w-screen">
+    <main class="h-screen w-screen">
         <div class="flex h-screen py-6">
             <div class="container m-auto">
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -20,5 +20,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 @stop

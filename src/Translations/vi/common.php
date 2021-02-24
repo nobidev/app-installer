@@ -8,6 +8,7 @@ return [
     'retry' => 'Thử lại',
     'start_install' => 'Bắt đầu cài đặt',
     'next_step' => 'Bước tiếp theo',
+    'confirm' => 'Xác nhận',
     'need_help' => 'Bạn có câu hỏi ?',
     'to_help_center' => 'Truy cập <i>Trung Tâm Hỗ Trợ</i>',
 ];

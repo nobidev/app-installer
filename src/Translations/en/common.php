@@ -8,6 +8,7 @@ return [
     'retry' => 'Retry',
     'start_install' => 'Start install',
     'next_step' => 'Next step',
+    'confirm' => 'Confirm',
     'need_help' => 'Do you have questions ?',
     'to_help_center' => 'Visit the <i>Support Center</i>'
 ];
