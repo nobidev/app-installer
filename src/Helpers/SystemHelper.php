@@ -25,15 +25,8 @@ class SystemHelper extends Helper
 
     public static function getResult(): array
     {
-        $values = self::getValue();
         $result = [];
         PathHelper::checkWritableEnv($result);
-        foreach ($values as $key => $value) {
-            $result[$key] = [
-                'value' => $value,
-                'is_ok' => true,
-            ];
-        }
 
         return array_merge(parent::getResult(), $result);
     }

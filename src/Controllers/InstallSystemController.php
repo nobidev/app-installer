@@ -71,6 +71,6 @@ class InstallSystemController extends InstallController
 
     protected function getRouteNext(): ?string
     {
-        return 'admin';
+        return 'owner';
     }
 }
