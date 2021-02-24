@@ -66,5 +66,6 @@ return [
         'username' => 'owner',
         'password' => 'owner',
         'email' => 'owner@example.com',
-    ]
+    ],
+    'finished_route' => 'home',
 ];

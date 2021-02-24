@@ -7,6 +7,7 @@ return [
     'step' => 'Step',
     'retry' => 'Retry',
     'start_install' => 'Start install',
+    'end_install' => 'Complete',
     'next_step' => 'Next step',
     'confirm' => 'Confirm',
     'need_help' => 'Do you have questions ?',
