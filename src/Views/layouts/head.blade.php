@@ -10,7 +10,8 @@
 @section('favicon', $favicon)
 
 @section('head')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css" rel="stylesheet">
+    <link href="https://tailwindcomponents.com/css/component.checkboxes.css" rel="stylesheet">
     <style>
         body {
             background: url("{{ $cover  }}") fixed;
