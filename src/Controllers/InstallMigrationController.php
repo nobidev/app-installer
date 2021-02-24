@@ -30,7 +30,7 @@ class InstallMigrationController extends InstallController
     public function getContextData(Request $request): array
     {
         $result = [
-            'migrate' => [
+            'migration' => [
                 'value' => $this->result,
                 'is_ok' => $this->code === 0,
             ]

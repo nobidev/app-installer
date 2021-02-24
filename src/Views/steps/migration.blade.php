@@ -14,9 +14,9 @@
     <p class="pb-3 text-gray-800">@lang($namespace . '::migration.introduce')</p>
     <form method="POST" action="{{ $url_retry }}">
         @csrf
-        @if($result['migrate']['value'])
+        @if($result['migration']['value'])
             <div class="flex">
-                <pre class="border-2 p-3 m-5 w-full text-xs">{{ $result['migrate']['value'] }}</pre>
+                <pre class="border-2 p-3 m-5 w-full text-xs">{{ $result['migration']['value'] }}</pre>
             </div>
         @endif
         <div class="flex justify-end">
