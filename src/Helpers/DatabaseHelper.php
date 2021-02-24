@@ -38,19 +38,17 @@ class DatabaseHelper extends Helper
 
     public static function getResult(): array
     {
-        $values = self::getValue();
-        $result = [];
+        $result = parent::getResult();
         PathHelper::checkWritableEnv($result);
-        foreach ($values as $key => $value) {
-            $result[$key] = [
-                'value' => $value,
-                'is_ok' => true,
-            ];
-        }
         try {
             new PDO(
-                sprintf('mysql:host=%s;port=%s;dbname=%s', $values['db_host'], $values['db_port'], $values['db_name']),
-                $values['db_user'], $values['db_password'],
+                sprintf(
+                    'mysql:host=%s;port=%s;dbname=%s',
+                    $result['db_host']['value'],
+                    $result['db_port']['value'],
+                    $result['db_name']['value']
+                ),
+                $result['db_user']['value'], $result['db_password']['value'],
             );
             $result['connection'] = [
                 'value' => 'Ok',
@@ -61,7 +59,7 @@ class DatabaseHelper extends Helper
                 'value' => $exception->getMessage(),
                 'is_ok' => false,
             ];
-            foreach (array_keys($values) as $key) {
+            foreach (array_keys($result) as $key) {
                 if (!$result[$key]['is_ok']) {
                     continue;
                 }

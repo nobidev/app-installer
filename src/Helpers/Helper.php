@@ -55,7 +55,16 @@ class Helper
 
     public static function getResult(): array
     {
-        return [];
+        $values = static::getValue();
+        $result = [];
+        foreach ($values as $key => $value) {
+            $result[$key] = [
+                'value' => $value,
+                'is_ok' => true,
+            ];
+        }
+
+        return $result;
     }
 
     public static function isOk(): bool

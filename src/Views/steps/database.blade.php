@@ -69,4 +69,13 @@
             @endif
         </div>
     </form>
+    @if($allow_next)
+        <script>
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    window.location.href = '{{ $url_next }}';
+                }, 1000);
+            });
+        </script>
+    @endif
 @endsection
