@@ -19,11 +19,6 @@ class DatabaseHelper extends Helper
     public const MYSQL_ERROR_CREDENTIAL = 1045;
     public const MYSQL_ERROR_SELECT_DATABASE = 1049;
 
-    protected static function getConnectionConfigKey(string $key, string $name = 'mysql'): string
-    {
-        return sprintf('database.connections.%s.%s', $name, $key);
-    }
-
     public static function getConfigMapping(): array
     {
         return array_merge(parent::getConfigMapping(), [
@@ -34,6 +29,11 @@ class DatabaseHelper extends Helper
             'db_user' => self::getConnectionConfigKey('username'),
             'db_password' => self::getConnectionConfigKey('password'),
         ]);
+    }
+
+    protected static function getConnectionConfigKey(string $key, string $name = 'mysql'): string
+    {
+        return sprintf('database.connections.%s.%s', $name, $key);
     }
 
     public static function getResult(): array

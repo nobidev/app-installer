@@ -17,6 +17,17 @@ use NobiDev\AppInstaller\Helpers\InstallHelper;
  */
 class InstallDatabaseController extends InstallController
 {
+    public function getContextData(Request $request): array
+    {
+        $result = DatabaseHelper::getResult();
+        $allow_next = InstallHelper::isDatabaseReady();
+
+        return array_merge(
+            parent::getContextData($request),
+            compact('result', 'allow_next'),
+        );
+    }
+
     protected function setState(array $data): void
     {
         parent::setState($data);
@@ -41,17 +52,6 @@ class InstallDatabaseController extends InstallController
             }
             EnvManager::save();
         }
-    }
-
-    public function getContextData(Request $request): array
-    {
-        $result = DatabaseHelper::getResult();
-        $allow_next = InstallHelper::isDatabaseReady();
-
-        return array_merge(
-            parent::getContextData($request),
-            compact('result', 'allow_next'),
-        );
     }
 
     protected function getView(): ?string
